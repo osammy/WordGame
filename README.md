@@ -37,7 +37,7 @@ Frontend
 - [ ] Style-components
 - [ ] Formik  Excellent for forms
 - [ ] Axios good ajax calls
-- [ ] Oxford dictionary api
+- [ ] Oxford dictionary api for validating words / We might still go the loal dictionary way...depends on our discussions.
 
 Backend (stretch)
 
