@@ -13,6 +13,7 @@ This project is a word game, that will be fully featured, word game. Where a pla
 - [ ] After completing a module you will submit a PR, which will be reviewed,and then merged if it meets the standards and requirements fo the project.
 - [ ] Use meaningful comments and commits to help yourself and others working on this project, its important that your code is readable and easy-on-the-eye.
 - [ ] Do not install any packages outside those that are already on the package.json, having differenc package.json file will make ot difficult to merge code without conflict, If there is any need to install any particular package other than those selected for the project, let the PM, and the team know so that it can be added to the master.
+- [ ] You will not need to fork this project, as a contributor you can push directly to the repo, but never to the master. Pls resist the urge as much as possible :D
 
 
 
