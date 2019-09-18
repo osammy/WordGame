@@ -4,14 +4,17 @@ This project is a word game, that will be fully featured, word game. Where a pla
 
 ## Guidelines
 
-**Read these guidelines carefully. Feel free to contact me, if you have any questions.**
+**Read these guidelines carefully. Feel free to reach out, if you have any questions.**
 
-### Commits and Comments
+### A few things to note
 
+- [ ] Tasks will be broken down and apportioned shortly amonst all participating developers based on skill and interest.
 - [ ] You will need to branch out of the master and create a separate branch, this is where you will be pushing your code to.
 - [ ] After completing a module you will submit a PR, which will be reviewed,and then merged if it meets the standards and requirements fo the project.
 - [ ] Use meaningful comments and commits to help yourself and others working on this project, its important that your code is readable and easy-on-the-eye.
 - [ ] Do not install any packages outside those that are already on the package.json, having differenc package.json file will make ot difficult to merge code without conflict, If there is any need to install any particular package other than those selected for the project, let the PM, and the team know so that it can be added to the master.
+
+
 
 ### Description
 - A player can Initiate a game between him/her and the  `computer` or `human opponent`(stretch task). Once a game is instantiated, Then game  begins a count down (The initiator of the game has the chance to set a time alloted for a player to finish a complete word before he lose's his turn)
