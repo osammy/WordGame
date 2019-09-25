@@ -37,6 +37,7 @@ Frontend
 - [ ] Redux (This will be a good way to practice next week's stuffs)
 - [ ] A UI-framework either semantic-ui or material-ui (The UI team will pick this) excellent utility UI elements
 - [ ] Animate.css aid with animations
+- [ ] React-animations also help with animations
 - [ ] react-icons Excellent for icons
 - [ ] Style-components
 - [ ] Formik  Excellent for forms
