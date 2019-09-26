@@ -8,10 +8,24 @@
  flex-direction: row;
  height: 30px;
  text-align: center;
- /*color:white;*/
- border-bottom-left-radius: 5px;
- border-bottom-right-radius: 5px;
- border-top-left-radius: 5px;
- border-top-right-radius: 5px;
+ /* font-weight:bold; */
+ font-size:2rem;
+ border-radius:5px;
  box-shadow: 1px 1px 1px 1px black;
 }
+
+.letter-pressed {
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    width:40px;
+    background: #ff5500;
+    padding:15px;
+    flex-direction: row;
+    height: 30px;
+    text-align: center;
+    /* font-weight:bold; */
+    font-size:2rem;
+    border-radius:5px;
+    /* box-shadow: 1px 1px 1px 1px black; */
+   }

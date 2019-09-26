@@ -1,24 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
+import Tile from './components/UI/Tiles/Tile';
+import Score from './components/UI/Scores/Score';
+import Timer from './components/Timer/Timer';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Word Game
-        </a>
-      </header>
+      <Tile letter="A" />
+      <Score name="me" score="50" />
+      <Timer />
     </div>
   );
 }
