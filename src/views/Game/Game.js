@@ -1,7 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Board, GameDetails } from "./GameComponents";
-import axios from 'axios';
-import {getUrl} from '../../data/urlController';
+import axios from "axios";
+import { getUrl } from "../../data/urlController";
+import {
+  simulateGetRandomWords,
+  isWordInString,
+  isRepeatedWord,
+  getValidWordFromDictionary,
+  validateWord
+} from "./gameController";
 import "./game.css";
 
 const Game = () => {
@@ -43,7 +50,7 @@ const Game = () => {
   useEffect(() => {
     const newRow = currentWordsRow + 1;
     setCurrentWordsRow(newRow);
-
+    // console.log(myTurn)
     if (gameStatus === "started") {
       if (!myTurn) {
         // alert(myTurn);
@@ -83,7 +90,6 @@ const Game = () => {
 
   const displayWordEntered = (currentWordsRow, enteredWord) => {
     let newWordsInRow = [...wordsInRows];
-    console.log("currWiR ", currentWordsRow);
     newWordsInRow[currentWordsRow] = enteredWord;
     setWordsInRows(newWordsInRow);
   };
@@ -104,82 +110,52 @@ const Game = () => {
   const handleFormSubmit = async e => {
     e.preventDefault();
     if (currentWordsRow === rowsOfWordsToFill) return;
-    const resp = await validateWord(textEnteredInInput);
+    const resp = await validateWord(textEnteredInInput,wordOnTiles,wordsInRows);
     const { exists } = resp;
-    if(!exists) {
+
+    if (!exists) {
       setTextEnteredInInput("");
       return;
     }
+
+    //determin who's turn it is to play
+    setMyTurn(false);
     //Display word on the board
     displayWordEntered(currentWordsRow, textEnteredInInput);
     //Empty Input
     setTextEnteredInInput("");
-    //move to the next row
-    const newCurrentRow = currentWordsRow + 1;
-    //setCurrentWordsRow(newCurrentRow);
-    //determin who's turn it is to play
-    setMyTurn(false);
+
     // simulateComputerPlay(newCurrentRow);
   };
 
-  const validateWord = word => {
-    return new Promise((resolve, reject) => {
-      console.log(wordOnTiles.join("") + " has "+ word + "i n it ?" );
-
-      // const wordOnTilesToString = wordOnTiles.join("")
-      // const pattern = `^[${wordOnTilesToString}]+$;`;
-      // console.log(pattern)
-      // const regExpression = new RegExp(pattern);
-      // console.log(typeof regExpression)
-      // const wordsInSampleWord = word.match(regExpression)
-
-      // console.log(wordsInSampleWord)
-      // if (!wordsInSampleWord)  return resolve({exists:false});
-      const url = getUrl("word_validate_url") +"/" +word;
-      axios
-      .get(url)
-      .then(response =>{
-        resolve(response)
-      })
-      .catch(err => {
-        reject(err)
-        console.log(err)
-      })
-
-    });
-  };
-
   const determineNextPlayer = () => {};
-  const getRandomWords = () => {
-    const words = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const noOfWords = Math.trunc(1 + Math.random() * 10);
-    let word = "";
-    console.log("noOfWords --> ", noOfWords);
 
-    for (let i = 0; i < noOfWords; i++) {
-      word = words[Math.trunc(1 + Math.random() * 25)];
-    }
-
-    return word;
-  };
   const simulateComputerPlay = newRow => {
     const { timer, timer_limit } = settings[game_mode];
-    console.log(timer_limit);
-    const time = Math.trunc(1 + Math.random() * timer_limit);
+    // const time = Math.trunc(1 + Math.random() * timer_limit);
+    const time = 3;
 
-    console.log(time);
+    const randomWordsTimeout = setTimeout(async () => {
+      // const randWord = simulateGetRandomWords();
+      let response = {};
+      try {
+        response = await getValidWordFromDictionary(wordOnTiles,wordsInRows);
+      } catch(e) {
+        alert(e)
+      }
+      console.log(response);
+      if(response.word === "") {
+        //give notification it could be that computer losses cause it cant find any other words.
+        clearTimeout(randomWordsTimeout)
+      }
 
-    const randomWordsTimeout = setTimeout(() => {
-      const randWord = getRandomWords();
-      console.log(randWord);
-
-      displayWordEntered(newRow, randWord);
+      displayWordEntered(newRow, response.word);
 
       //set row to the next
       setMyTurn(true);
 
       resetTimer();
-    }, 3 * 1000);
+    }, time * 1000);
   };
 
   const handleFormChange = e => {
