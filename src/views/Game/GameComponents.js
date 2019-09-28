@@ -7,6 +7,7 @@ export const Board = props => {
     letters,
     rowsOfWordsToFill,
     wordsInRows,
+    enableInput,
     textEnteredInInput,
     handleFormChange,
     handleFormSubmit
@@ -40,6 +41,7 @@ export const Board = props => {
           value={textEnteredInInput}
           onChange={handleFormChange}
           required
+          disabled={!enableInput}
         />
         <button onClick={handleFormSubmit}>Send</button>
       </form>
