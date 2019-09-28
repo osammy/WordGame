@@ -1,6 +1,8 @@
 import React from "react";
 import Tiles from "../../components/Tiles/Tiles";
 import Timer from "../../components/Timer/Timer";
+import { Button } from "@chakra-ui/core";
+import { IoIosSquare } from "react-icons/io";
 
 export const Board = props => {
   const {
@@ -21,9 +23,7 @@ export const Board = props => {
           return (
             <div key={index} className="enteredWords">
               {wordsInRows[index] ? (
-                <span
-                  style={{ color: (index + 1) % 2 === 0 ? "red" : "#000" }}
-                >
+                <span style={{ color: (index + 1) % 2 === 0 ? "red" : "#000" }}>
                   .
                 </span>
               ) : (
@@ -43,14 +43,39 @@ export const Board = props => {
           required
           disabled={!enableInput}
         />
-        <button onClick={handleFormSubmit}>Send</button>
+        <button onClick={handleFormSubmit}>Play</button>
       </form>
     </div>
   );
 };
 
-export const GameDetails = ({timer}) => {
-  return <div className="game-details">
+export const GameDetails = ({ timer }) => {
+  return (
+    <div className="game-details">
       <Timer timer={timer} />
-  </div>;
+    </div>
+  );
+};
+
+export const GameStart = ({ startGame,isLoading }) => {
+  return (
+    <div className="game-ready">
+      <h2>Start Game!</h2>
+      <div>
+        <Button
+          size="md"
+          height="48px"
+          width="200px"
+          border="2px"
+          fontSize="2em"
+          borderRadius="20px"
+          onClick={startGame}
+          isLoading={isLoading}
+          loadingText="waiting..."
+        >
+          Start
+        </Button>
+      </div>
+    </div>
+  );
 };

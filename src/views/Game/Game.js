@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Board, GameDetails } from "./GameComponents";
+import { Board, GameDetails,GameStart } from "./GameComponents";
 import axios from "axios";
 import { getUrl } from "../../data/urlController";
 import {
@@ -9,6 +9,7 @@ import {
   getValidWordFromDictionary,
   validateWord
 } from "./gameController";
+import Modal from "../../components/UI/Modal/Modal";
 import "./game.css";
 
 const Game = () => {
@@ -20,6 +21,8 @@ const Game = () => {
     "l",
     "t"
   ]);
+  const [modalIsOpen, setModalIsOpen] = useState(true);
+  const [btnIsLoading, setBtnIsLoading] = useState(false);
   const [rowsOfWordsToFill, setRowsOfWordsToFill] = useState(8);
   const [currentWordsRow, setCurrentWordsRow] = useState(-1);
   const [wordsInRows, setWordsInRows] = useState(
@@ -30,7 +33,11 @@ const Game = () => {
   const [timer, setTimer] = useState("00");
   const [myTurn, setMyTurn] = useState(false);
   const [gameStatus, setGameStatus] = useState("ready"); //could be 'started','ended','paused' or 'disconnected' or 'terminated'
+  const [isOpen, setIsOpen] = useState(false);
 
+  const open = () => setIsOpen(true);
+
+  const close = () => setIsOpen(false);
   const intervalRef = useRef();
 
   const settings = {
@@ -85,6 +92,9 @@ const Game = () => {
     setMyTurn(true);
     //start count down timer
     setTimer(timeAllotedForGame);
+    //CLOSE MODAL
+    setModalIsOpen(false);
+    //start game
     setGameStatus("started");
   };
 
@@ -96,6 +106,11 @@ const Game = () => {
 
   const stopTimer = () => {
     clearInterval(intervalRef.current);
+    setTimer("00");
+  };
+
+  const startTimer = () => {
+    setTimer(timeAllotedForGame);
   };
 
   const resetTimer = () => {
@@ -110,7 +125,11 @@ const Game = () => {
   const handleFormSubmit = async e => {
     e.preventDefault();
     if (currentWordsRow === rowsOfWordsToFill) return;
-    const resp = await validateWord(textEnteredInInput,wordOnTiles,wordsInRows);
+    const resp = await validateWord(
+      textEnteredInInput,
+      wordOnTiles,
+      wordsInRows
+    );
     const { exists } = resp;
 
     if (!exists) {
@@ -125,6 +144,9 @@ const Game = () => {
     //Empty Input
     setTextEnteredInInput("");
 
+    //stop Timer
+    stopTimer();
+
     // simulateComputerPlay(newCurrentRow);
   };
 
@@ -138,15 +160,16 @@ const Game = () => {
     const randomWordsTimeout = setTimeout(async () => {
       // const randWord = simulateGetRandomWords();
       let response = {};
+
       try {
-        response = await getValidWordFromDictionary(wordOnTiles,wordsInRows);
-      } catch(e) {
-        alert(e)
+        response = await getValidWordFromDictionary(wordOnTiles, wordsInRows);
+      } catch (e) {
+        alert(e);
       }
-      console.log(response);
-      if(response.word === "") {
+
+      if (response.word === "") {
         //give notification it could be that computer losses cause it cant find any other words.
-        clearTimeout(randomWordsTimeout)
+        clearTimeout(randomWordsTimeout);
       }
 
       displayWordEntered(newRow, response.word);
@@ -154,7 +177,7 @@ const Game = () => {
       //set row to the next
       setMyTurn(true);
 
-      resetTimer();
+      startTimer();
     }, time * 1000);
   };
 
@@ -180,7 +203,17 @@ const Game = () => {
         />
         <GameDetails timer={timer} />
       </section>
-      <button onClick={startGame}>click</button>
+      {/* <button onClick={startGame}>click</button> */}
+      <Modal
+        modalIsOpen={modalIsOpen}
+        closeModal={() => {
+          console.log("hey");
+        }}
+        shouldCloseOnOverlayClick={true}
+        hideCloseButton={true}
+      >
+        <GameStart startGame={startGame} isLoading={btnIsLoading} />
+      </Modal>
     </div>
   );
 };

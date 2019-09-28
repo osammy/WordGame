@@ -31,7 +31,7 @@
   letter-spacing: 2em;
   text-align:left;
   text-transform: uppercase;
-  margin-bottom:20px;
+  margin-bottom:15px;
   font-weight:bold
 }
 
@@ -51,7 +51,7 @@
 }
 .word-form input {
   border: 0;
-  padding: 8px;
+  padding: 3px;
   width: 80%;
   background:none;
   font-size:3em;
@@ -64,10 +64,22 @@
     outline:none;
   }
 .word-form button {
+  margin:0;
   width: 12%;
   background: #ff5500;
   border: none;
   padding: 10px 20px;
   border-radius:12px;
   cursor:pointer;
+}
+
+.game-ready {
+  text-align:center;
+  width:500px;
+  height:200px;
+}
+
+.game-ready h2 {
+  font-size:3rem;
+  margin-bottom:50px;
 }

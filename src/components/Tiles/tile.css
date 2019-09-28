@@ -16,6 +16,8 @@
  flex-direction: row;
  height: 45px;
  text-align: center;
+ color:#fff;
+ text-transform: uppercase;
  /* font-weight:bold; */
  font-size:2rem;
  border-radius:5px;
