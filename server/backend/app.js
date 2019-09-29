@@ -31,7 +31,7 @@ var io = require('socket.io')(server);
 //});
 
 
-db()
+//db()
 
 middleware(app)
 

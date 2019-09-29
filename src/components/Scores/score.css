@@ -1,0 +1,62 @@
+.scores-container {
+  display:flex;
+  justify-content: space-between;
+}  
+  
+  
+  
+  .scoreboard {
+    width: 58%;
+    margin: 10rem auto;
+    background-color: #0b5402;
+    color: white;
+    border-radius: 0.5rem;
+    margin-top: 10rem;
+    padding: 5rem;
+    border: 4px solid #aaaaaa;
+  }
+
+.player,
+.opponent {
+  /* height: 100%; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  place-items: center;
+  border: 3px solid white;
+  border-radius: 0.5rem;
+  width: 17rem;
+}
+
+.player {
+  background-color: #656565;
+}
+
+.away {
+  background-color: #af750a;
+}
+
+.player__name,
+.away__name,
+.down__title,
+.toGo__title,
+.ballOn__title,
+.quarter__title {
+  text-transform: uppercase;
+  font-size: 2rem;
+  padding: 2rem;
+  color:#fff;
+  word-break: break-all;
+}
+
+.player__score,
+.away__score {
+  font-family: "Ozone";
+  font-size: 7rem;
+  width: 90%;
+  text-align: center;
+  background-color: var(--black);
+  color: var(--red);
+  padding: 5%;
+}
+

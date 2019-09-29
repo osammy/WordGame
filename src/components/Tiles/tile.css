@@ -1,0 +1,42 @@
+.tiles-container {
+    display: flex;
+    justify-content:space-between;
+    padding:5px 0 10px 0;
+    /* background:black; */
+}
+
+
+.letter {
+ display:flex;
+ justify-content:center;
+ align-items: center;
+ width:70px;
+ background: #ff5500;
+ padding:15px;
+ flex-direction: row;
+ height: 45px;
+ text-align: center;
+ color:#fff;
+ text-transform: uppercase;
+ /* font-weight:bold; */
+ font-size:2rem;
+ border-radius:5px;
+ box-shadow: 1px 1px 1px 1px black;
+ cursor:pointer;
+}
+
+.letter-pressed {
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    width:40px;
+    background: #ff5500;
+    padding:15px;
+    flex-direction: row;
+    height: 30px;
+    text-align: center;
+    /* font-weight:bold; */
+    font-size:2rem;
+    border-radius:5px;
+    /* box-shadow: 1px 1px 1px 1px black; */
+   }
