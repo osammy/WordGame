@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import ReactModal from "react-modal";
 import { CloseButton } from "./ModalComponents";
-let customStyles = {
+import { background } from "styled-system";
+
+
+
+function DisplayComponentModal(props) {
+
+  let customStyles = {
     content : {
         top                   : '50%',
         left                  : '50%',
@@ -14,16 +20,14 @@ let customStyles = {
         overflow              : 'hidden',
         transform             : 'translate(-50%, -50%)',
         borderRadius          : '5px',
-        border                : '1px solid #fff',
-        boxShadow             : '0 4px 8px 0 rgba(0,0,0,0.2)'
+        border                : 'none',
+        boxShadow             : '0 4px 8px 0 rgba(0,0,0,0.2)',
+        background            : props.transparentBackground ? 'none':'#fff'
       },
       overlay: {
         backgroundColor: 'rgba(0,0,0,0.6)'
       },
 };
-
-
-function DisplayComponentModal(props) {
   let { overrideStyle, shouldCloseOnOverlayClick, hide, modalIsOpen, hideCloseButton } = props;
   customStyles = overrideStyle
     ? { ...customStyles, ...overrideStyle }

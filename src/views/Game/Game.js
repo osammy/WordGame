@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Board, GameDetails,GameStart } from "./GameComponents";
+import { Board, GameDetails, GameStart } from "./GameComponents";
 import axios from "axios";
 import { getUrl } from "../../data/urlController";
 import {
@@ -35,21 +35,20 @@ const Game = () => {
   const [gameStatus, setGameStatus] = useState("ready"); //could be 'started','ended','paused' or 'disconnected' or 'terminated'
   const [players, setPlayers] = useState([
     {
-      id:0,
-      type:"player",
-      className:"player",
-      name:"Samuel",
-      score:0
+      id: 0,
+      type: "player",
+      className: "player",
+      name: "Samuel",
+      score: 0
     },
     {
-      id:1,
-      type:"opponent",
-      className:"player away",
-      name:"Computer",
-      score:0
+      id: 1,
+      type: "opponent",
+      className: "player away",
+      name: "Computer",
+      score: 0
     }
   ]);
-
 
   const intervalRef = useRef();
 
@@ -111,14 +110,14 @@ const Game = () => {
     setGameStatus("started");
   };
 
-  const addScore = (type,score) => {
+  const addScore = (type, score) => {
     const copyOfPlayers = [...players];
     const index = players.findIndex(el => el.type === type);
     const playerDetails = copyOfPlayers[index];
-    playerDetails.score += score; 
+    playerDetails.score += score;
     copyOfPlayers[index] = playerDetails;
-    setPlayers(copyOfPlayers)
-  }
+    setPlayers(copyOfPlayers);
+  };
 
   const displayWordEntered = (currentWordsRow, enteredWord) => {
     let newWordsInRow = [...wordsInRows];
@@ -170,7 +169,7 @@ const Game = () => {
     stopTimer();
 
     // add score for player
-    addScore("player",5);
+    addScore("player", 5);
   };
 
   const determineNextPlayer = () => {};
@@ -201,7 +200,7 @@ const Game = () => {
       setMyTurn(true);
 
       //set computer score
-      addScore("opponent",5);
+      addScore("opponent", 5);
 
       startTimer();
     }, time * 1000);
@@ -229,13 +228,12 @@ const Game = () => {
         />
         <GameDetails timer={timer} players={players} />
       </section>
-      {/* <button onClick={startGame}>click</button> */}
       <Modal
         modalIsOpen={modalIsOpen}
         closeModal={() => {
-          console.log("hey");
+          setModalIsOpen(false);
         }}
-        shouldCloseOnOverlayClick={true}
+        shouldCloseOnOverlayClick={false}
         hideCloseButton={true}
       >
         <GameStart startGame={startGame} isLoading={btnIsLoading} />

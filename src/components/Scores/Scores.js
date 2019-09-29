@@ -3,8 +3,6 @@ import Score from "./Score";
 import "./score.css";
 
 const Scores = props => {
-  console.log(props);
-  // const score = props.score;
   const { players } = props;
 
   return (

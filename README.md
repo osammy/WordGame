@@ -5,8 +5,8 @@ This project is a word game, that will be fully featured, word game. Where a pla
 # How to run this app locally 
 
 - [ ] Clone the repo.
-- [ ] npm install
-- [ ] Navigate to the /server/backend and run npm start.(this starts the server).
+- [ ] 'npm install' at the root folder
+- [ ] Navigate to the /server/backend and `npm install` and then `npm start`.(this starts the server).
 - [ ] Navigate back to the root folder and run npm start.
 
 
