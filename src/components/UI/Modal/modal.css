@@ -1,0 +1,9 @@
+.modal-close-button {
+    display:flex;
+    justify-content: flex-end;
+    font-size:2em;
+}
+
+.modal-container {
+    margin:20px;
+}
