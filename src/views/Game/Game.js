@@ -33,11 +33,24 @@ const Game = () => {
   const [timer, setTimer] = useState("00");
   const [myTurn, setMyTurn] = useState(false);
   const [gameStatus, setGameStatus] = useState("ready"); //could be 'started','ended','paused' or 'disconnected' or 'terminated'
-  const [isOpen, setIsOpen] = useState(false);
+  const [players, setPlayers] = useState([
+    {
+      id:0,
+      type:"player",
+      className:"player",
+      name:"Samuel",
+      score:0
+    },
+    {
+      id:1,
+      type:"opponent",
+      className:"player away",
+      name:"Computer",
+      score:0
+    }
+  ]);
 
-  const open = () => setIsOpen(true);
 
-  const close = () => setIsOpen(false);
   const intervalRef = useRef();
 
   const settings = {
@@ -98,6 +111,15 @@ const Game = () => {
     setGameStatus("started");
   };
 
+  const addScore = (type,score) => {
+    const copyOfPlayers = [...players];
+    const index = players.findIndex(el => el.type === type);
+    const playerDetails = copyOfPlayers[index];
+    playerDetails.score += score; 
+    copyOfPlayers[index] = playerDetails;
+    setPlayers(copyOfPlayers)
+  }
+
   const displayWordEntered = (currentWordsRow, enteredWord) => {
     let newWordsInRow = [...wordsInRows];
     newWordsInRow[currentWordsRow] = enteredWord;
@@ -147,7 +169,8 @@ const Game = () => {
     //stop Timer
     stopTimer();
 
-    // simulateComputerPlay(newCurrentRow);
+    // add score for player
+    addScore("player",5);
   };
 
   const determineNextPlayer = () => {};
@@ -177,6 +200,9 @@ const Game = () => {
       //set row to the next
       setMyTurn(true);
 
+      //set computer score
+      addScore("opponent",5);
+
       startTimer();
     }, time * 1000);
   };
@@ -201,7 +227,7 @@ const Game = () => {
           textEnteredInInput={textEnteredInInput}
           enableInput={myTurn}
         />
-        <GameDetails timer={timer} />
+        <GameDetails timer={timer} players={players} />
       </section>
       {/* <button onClick={startGame}>click</button> */}
       <Modal

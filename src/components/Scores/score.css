@@ -1,3 +1,10 @@
+.scores-container {
+  display:flex;
+  justify-content: space-between;
+}  
+  
+  
+  
   .scoreboard {
     width: 58%;
     margin: 10rem auto;
@@ -11,14 +18,14 @@
 
 .player,
 .opponent {
-  height: 100%;
+  /* height: 100%; */
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   place-items: center;
   border: 3px solid white;
   border-radius: 0.5rem;
-  width: 15rem;
+  width: 17rem;
 }
 
 .player {
@@ -36,9 +43,10 @@
 .ballOn__title,
 .quarter__title {
   text-transform: uppercase;
-  font-size: 3rem;
+  font-size: 2rem;
   padding: 2rem;
   color:#fff;
+  word-break: break-all;
 }
 
 .player__score,
@@ -51,3 +59,4 @@
   color: var(--red);
   padding: 5%;
 }
+

@@ -1,8 +1,9 @@
 import React from "react";
 import Tiles from "../../components/Tiles/Tiles";
 import Timer from "../../components/Timer/Timer";
+import Scores from "../../components/Scores/Scores";
 import { Button } from "@chakra-ui/core";
-import { IoIosSquare } from "react-icons/io";
+// import { IoIosSquare } from "react-icons/io";
 
 export const Board = props => {
   const {
@@ -49,10 +50,12 @@ export const Board = props => {
   );
 };
 
-export const GameDetails = ({ timer }) => {
+export const GameDetails = ({ timer, players }) => {
   return (
     <div className="game-details">
       <Timer timer={timer} />
+      {/* <Score name="samuel" score="90" /> */}
+      <Scores  players={players} />
     </div>
   );
 };

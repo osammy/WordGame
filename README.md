@@ -2,6 +2,14 @@
 
 This project is a word game, that will be fully featured, word game. Where a player can play against either the `computer` as an opponent or play against a friend online(This will be the strecth task). This game will be built by several developers working as a team, from one repo. As such care needs to be taken so as not to undermine the work of another. Based on this, certain guidelines follow.
 
+# How to run this app locally 
+
+- [ ] Clone the repo.
+- [ ] npm install
+- [ ] Navigate to the /server/backend and run npm start.(this starts the server).
+- [ ] Navigate back to the root folder and run npm start.
+
+
 ## Guidelines
 
 **Read these guidelines carefully. Feel free to reach out, if you have any questions.**
@@ -43,6 +51,8 @@ Frontend
 - [ ] Formik  Excellent for forms
 - [ ] Chakra-UI- Excellent UI-Library  
 - [ ] Axios good ajax calls
+- [ ] React-Icons, an exhasutive collection of Icons
+- [ ] React-Notifications, for notifications
 - [ ] Oxford dictionary api for validating words / We might still go the loal dictionary way...depends on our discussions.
 
 Backend (This is no longer a stretch, it is now included in the core of the project)
