@@ -13,7 +13,8 @@ export const Board = props => {
     enableInput,
     textEnteredInInput,
     handleFormChange,
-    handleFormSubmit
+    handleFormSubmit,
+    inputRef
   } = props;
   return (
     <div className="board">
@@ -43,6 +44,7 @@ export const Board = props => {
           onChange={handleFormChange}
           required
           disabled={!enableInput}
+          ref={inputRef} 
         />
         <button onClick={handleFormSubmit}>Play</button>
       </form>
@@ -64,7 +66,7 @@ export const GameStart = ({ startGame,isLoading }) => {
   return (
     <div className="game-ready">
       <h2>Start Game!</h2>
-      <div>
+      <div > 
         <Button
           size="md"
           height="48px"

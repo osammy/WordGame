@@ -21,14 +21,14 @@ function DisplayComponentModal(props) {
         transform             : 'translate(-50%, -50%)',
         borderRadius          : '5px',
         border                : 'none',
-        boxShadow             : '0 4px 8px 0 rgba(0,0,0,0.2)',
+        boxShadow             : props.noBoxShadow ? "none":'0 4px 8px 0 rgba(0,0,0,0.2)',
         background            : props.transparentBackground ? 'none':'#fff'
       },
       overlay: {
         backgroundColor: 'rgba(0,0,0,0.6)'
       },
 };
-  let { overrideStyle, shouldCloseOnOverlayClick, hide, modalIsOpen, hideCloseButton } = props;
+  let { overrideStyle, shouldCloseOnOverlayClick, hide, modalIsOpen, hideCloseButton, closeBtnBackgroundColor } = props;
   customStyles = overrideStyle
     ? { ...customStyles, ...overrideStyle }
     : customStyles;
@@ -49,8 +49,9 @@ function DisplayComponentModal(props) {
       <CloseButton
         onClick={()=>{console.log("hey")}}
         iconClassName="gb-white-close-btn-background"
-        backgroundColor="white"
+        backgroundColor={closeBtnBackgroundColor ? closeBtnBackgroundColor:"#fff"}
         hideCloseButton={hideCloseButton}
+        iconColor={props.transparentBackground ? "#fff":"#000"}
       />
       <div className="modal-container">{props.children}</div>
     </ReactModal>

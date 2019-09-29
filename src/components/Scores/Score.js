@@ -1,10 +1,8 @@
 import React from "react";
-import './score.css';
+import "./score.css";
 
-const Score = (props) => {
-    console.log(props)
-    // const score = props.score;
-    const {score, name, className} = props;
+const Score = props => {
+  const { score, name, className } = props;
 
   return (
     <div className={className}>

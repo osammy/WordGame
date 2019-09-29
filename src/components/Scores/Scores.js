@@ -7,8 +7,8 @@ const Scores = props => {
 
   return (
     <div className="scores-container">
-      {players.map(({ score, name, className }) => (
-        <Score name={name} score={score} className={className} />
+      {players.map(({ score, name, className, id }) => (
+        <Score key={id} name={name} score={score} className={className} />
       ))}
     </div>
   );

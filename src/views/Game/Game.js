@@ -1,29 +1,30 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Board, GameDetails, GameStart } from "./GameComponents";
-import axios from "axios";
-import { getUrl } from "../../data/urlController";
+import GameOver from "../../components/GameOver/GameOver";
+import {Button,Box} from '@chakra-ui/core';
+// import { useToast } from "@chakra-ui/core";
+// import axios from "axios";
+// import { getUrl } from "../../data/urlController";
 import {
   simulateGetRandomWords,
   isWordInString,
   isRepeatedWord,
   getValidWordFromDictionary,
-  validateWord
+  validateWord,
+  getGameWordsList
 } from "./gameController";
 import Modal from "../../components/UI/Modal/Modal";
 import "./game.css";
 
 const Game = () => {
-  const [wordOnTiles, setWordsOnTiles] = useState([
-    "r",
-    "e",
-    "s",
-    "u",
-    "l",
-    "t"
-  ]);
-  const [modalIsOpen, setModalIsOpen] = useState(true);
+  // const toast = useToast();
+  const [gameOverModal, setGameOverModal] = useState(false);
+  const [wordOnTiles, setWordsOnTiles] = useState("");
+  const [sampleWordList,setSampleWordList] = useState([])
+  const [wordSampleIndex, setWordSampleIndex] = useState(0);
+  const [startGameModalIsOpen, setStartGameModalIsOpen] = useState(true);
   const [btnIsLoading, setBtnIsLoading] = useState(false);
-  const [rowsOfWordsToFill, setRowsOfWordsToFill] = useState(8);
+  const [rowsOfWordsToFill, setRowsOfWordsToFill] = useState(7); //total of 8 zero indexed
   const [currentWordsRow, setCurrentWordsRow] = useState(-1);
   const [wordsInRows, setWordsInRows] = useState(
     Array(rowsOfWordsToFill).fill(null)
@@ -33,6 +34,7 @@ const Game = () => {
   const [timer, setTimer] = useState("00");
   const [myTurn, setMyTurn] = useState(false);
   const [gameStatus, setGameStatus] = useState("ready"); //could be 'started','ended','paused' or 'disconnected' or 'terminated'
+  
   const [players, setPlayers] = useState([
     {
       id: 0,
@@ -51,6 +53,7 @@ const Game = () => {
   ]);
 
   const intervalRef = useRef();
+  const inputRef = useRef();
 
   const settings = {
     single_player: {
@@ -71,10 +74,25 @@ const Game = () => {
     setCurrentWordsRow(newRow);
     // console.log(myTurn)
     if (gameStatus === "started") {
+      console.log("currentWordsRow " +currentWordsRow + "=== " + rowsOfWordsToFill)
+      if (currentWordsRow === rowsOfWordsToFill) {
+        const newIndex = wordSampleIndex + 1;
+        if(newIndex > sampleWordList.length -1) return;
+        //delay to allow last word display on screen before going to the next level
+        setTimeout(()=>{
+          initGameLevel();
+
+        setWordsOnTiles(sampleWordList[newIndex]);
+        setWordSampleIndex(newIndex);
+        },1000)
+        return
+      };
       if (!myTurn) {
         // alert(myTurn);
-
+        
         simulateComputerPlay(newRow);
+
+        
 
         setMyTurn(true);
       }
@@ -82,6 +100,10 @@ const Game = () => {
   }, [wordsInRows]);
 
   useEffect(() => {
+    // if (timer === "00") {
+    //   if (myTurn) setGameOverModal(true);
+    // }
+
     let sec = timer;
     let secInNum = Number(sec);
     const refToSetTimer = setTimeout(() => {
@@ -99,13 +121,73 @@ const Game = () => {
     if (secInNum === 0) clearInterval(intervalRef.current);
   }, [timer]);
 
-  const startGame = () => {
+  const startAnotherGame = () => {
+    startGame();
+    //Close game over modal
+    setGameOverModal(false);
+  };
+
+
+
+  const initGameLevel = () => {
+    //init level
+    setCurrentWordsRow(-1);
+    setWordsInRows(Array(rowsOfWordsToFill).fill(null));
+  };
+
+  const initGame = () => {
+    //init game
+    setWordsOnTiles("");
+    setWordSampleIndex(0);
+    setCurrentWordsRow(-1);
+    setWordsInRows(Array(rowsOfWordsToFill).fill(null));
+    setTextEnteredInInput("");
+    setTimer("00");
+    setMyTurn(false);
+    setGameOverModal(false);
+    setGameStatus("ready");
+    setPlayers([
+      {
+        id: 0,
+        type: "player",
+        className: "player",
+        name: "Samuel",
+        score: 0
+      },
+      {
+        id: 1,
+        type: "opponent",
+        className: "player away",
+        name: "Computer",
+        score: 0
+      }
+    ]);
+  };
+
+  const endGame = () => {
+    //determine lose and winner
+
+    setGameOverModal(true);
+    setTimer("00");
+  };
+
+  const startGame = async () => {
+    //show modal loader icon
+    setBtnIsLoading(true);
+    //getWordsListFromServer
+    const { words } = await getGameWordsList(6, 8, 100);
+    //set wordlist
+    setSampleWordList(words)
+    //select word to be displayed on tiles
+    setWordsOnTiles(words[wordSampleIndex]);
     //set player turn
     setMyTurn(true);
     //start count down timer
     setTimer(timeAllotedForGame);
+    //close modal loader icon
+    setBtnIsLoading(true);
     //CLOSE MODAL
-    setModalIsOpen(false);
+    setStartGameModalIsOpen(false);
     //start game
     setGameStatus("started");
   };
@@ -146,6 +228,8 @@ const Game = () => {
   const handleFormSubmit = async e => {
     e.preventDefault();
     if (currentWordsRow === rowsOfWordsToFill) return;
+    //disallow play if time is up
+    if (timer === "00") return;
     const resp = await validateWord(
       textEnteredInInput,
       wordOnTiles,
@@ -175,12 +259,13 @@ const Game = () => {
   const determineNextPlayer = () => {};
 
   const simulateComputerPlay = newRow => {
+
     const { timer, timer_limit } = settings[game_mode];
     // const time = Math.trunc(1 + Math.random() * timer_limit);
-    const time = 3;
+    const time = 1;
 
     const randomWordsTimeout = setTimeout(async () => {
-      // const randWord = simulateGetRandomWords();
+
       let response = {};
 
       try {
@@ -203,6 +288,10 @@ const Game = () => {
       addScore("opponent", 5);
 
       startTimer();
+
+      //set focus to input
+      inputRef.current.focus();
+
     }, time * 1000);
   };
 
@@ -225,19 +314,40 @@ const Game = () => {
           handleFormSubmit={handleFormSubmit}
           textEnteredInInput={textEnteredInInput}
           enableInput={myTurn}
+          inputRef={inputRef} 
         />
         <GameDetails timer={timer} players={players} />
       </section>
       <Modal
-        modalIsOpen={modalIsOpen}
+        modalIsOpen={startGameModalIsOpen}
         closeModal={() => {
-          setModalIsOpen(false);
+          setStartGameModalIsOpen(false);
         }}
         shouldCloseOnOverlayClick={false}
         hideCloseButton={true}
       >
         <GameStart startGame={startGame} isLoading={btnIsLoading} />
       </Modal>
+      <GameOver
+        show={gameOverModal}
+        noBoxShadow={true}
+        startAnotherGame={startAnotherGame}
+        players={players}
+      />
+          {/* <Button
+      onClick={() =>
+        toast({
+          position: "bottom-left",
+          render: () => (
+            <Box m={3} color="white" p={3} bg="blue.500">
+              Hello World
+            </Box>
+          ),
+        })
+      }
+    >
+      Show Toast
+    </Button> */}
     </div>
   );
 };

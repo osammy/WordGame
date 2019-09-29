@@ -34,7 +34,7 @@ export const simulateGetRandomWords = () => {
   export const getValidWordFromDictionary = (permissibleText, wordsAlreadyPlayed) => {
     const options = {
         method:'GET',
-        url:getUrl('valid_word_in_dictionary') + '/' + permissibleText,
+        url:getUrl('valid_words_in_dictionary') + '/' + permissibleText,
         headers: {
               'Content-Type': 'application/json',
         },
@@ -58,9 +58,9 @@ export const simulateGetRandomWords = () => {
 
   export const validateWord = (word,wordOnTiles,wordsInRows) => {
     return new Promise((resolve, reject) => {
-      const wordOnTilesToString = wordOnTiles.join("");
+      // const wordOnTilesToString = wordOnTiles.join("");
       word = word.toLowerCase();
-      const wordInString = isWordInString(word, wordOnTilesToString);
+      const wordInString = isWordInString(word, wordOnTiles);
       const wordIsRepeated = isRepeatedWord(word, wordsInRows);
       if (!wordInString || wordIsRepeated)
         resolve({ status: "success", word, exists: false });
@@ -78,3 +78,28 @@ export const simulateGetRandomWords = () => {
         });
     });
   };
+
+  export const getGameWordsList = (minCharLength,maxCharLength,noOfWords) => {
+    const options = {
+        method:'GET',
+        url:getUrl('valid_words_in_dictionary'),
+        headers: {
+              'Content-Type': 'application/json',
+        },
+        params:{
+          minCharLength,maxCharLength,noOfWords
+        },
+    }
+
+    return new Promise((resolve,reject) => {
+        axios(options)
+        .then((response)=>{
+            const data = response.data;
+            resolve(data);
+        })
+        .catch(err => {
+            reject(err);
+        })
+
+    })
+  }
