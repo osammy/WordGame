@@ -16,6 +16,8 @@ export const Board = props => {
     handleFormSubmit,
     inputRef
   } = props;
+
+  console.log(letters);
   return (
     <div className="board">
       <Tiles letters={letters} />
@@ -44,9 +46,9 @@ export const Board = props => {
           onChange={handleFormChange}
           required
           disabled={!enableInput}
-          ref={inputRef} 
+          ref={inputRef}
         />
-        <button onClick={handleFormSubmit}>Play</button>
+        <button onClick={handleFormSubmit} disabled={!enableInput}>Play</button>
       </form>
     </div>
   );
@@ -57,16 +59,16 @@ export const GameDetails = ({ timer, players }) => {
     <div className="game-details">
       <Timer timer={timer} />
       {/* <Score name="samuel" score="90" /> */}
-      <Scores  players={players} />
+      <Scores players={players} />
     </div>
   );
 };
 
-export const GameStart = ({ startGame,isLoading }) => {
+export const GameStart = ({ startGame, isLoading }) => {
   return (
     <div className="game-ready">
       <h2>Start Game!</h2>
-      <div > 
+      <div>
         <Button
           size="md"
           height="48px"

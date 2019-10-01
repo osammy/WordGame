@@ -4,7 +4,16 @@ const fs = require("fs");
 const handleError = require("../utils/handleError");
 
 // const pathToDictionary = "./dictionary/english3.txt"
-const pathToDictionary = "./dictionary/engmix.txt"
+// const pathToDictionary = "./dictionary/engmix.txt";
+// const pathToDictionary = "./dictionary/words_alpha.txt";
+// const pathToDictionary = "./dictionary/english1000.txt";
+// const pathToDictionary = "./dictionary/english3000.txt";
+const pathToDictionary = "./dictionary/english10000.txt";
+
+
+
+
+
 
 router.route("/valid/:word").get(async function(req, res, next) {
   const word = req.params.word.toLowerCase();

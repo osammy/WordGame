@@ -65,13 +65,20 @@
     outline:none;
   }
 .word-form button {
+
   margin:0;
-  width: 12%;
-  background: #ff5500;
+  width: 150px;
+  height:45px;
+  border-radius:20px;
+  background: #ff693e;
   border: none;
-  padding: 10px 20px;
+  margin-bottom:3px;
+  /* padding: 5px 20px; */
   border-radius:12px;
   cursor:pointer;
+  color:#fff;
+  font-size:2em;
+  text-transform: uppercase;
 }
 
 .game-ready {
